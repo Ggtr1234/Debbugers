@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/navbar.html') %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
+</head>
+<body>
+<h1> INSERT PILOTO</h1>
+<form action="/pilotos/insert" method="POST">
+
+    <label for="idequipo">ID equipo</label>
+    <input id="idequipo" type="text" name="idequipo">
+
+    <label for="nombrepiloto">nombrepiloto</label>
+    <input id="nombrepiloto" type="text" name="nombre">
+
+    <label for="apellidospiloto">edad</label>
+    <input id="apellidospiloto" type="text" name="edad">
+
+    <label for="nacionpiloto">nacionpiloto</label>
+    <input id="nacionpiloto" type="text" name="nacion">
+
+    <label for="titulospiloto">titulospiloto</label>
+    <input id="titulospiloto" type="text" name="premios">
+
+    <label for="imagenpiloto">imagenpiloto</label>
+    <input id="imagenpiloto" type="text" name="imagen">
+
+    <input type="submit" value="insert">
+</form>
+</body>
+<%- include('partials/footer.html') %>
+</html>

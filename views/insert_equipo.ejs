@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/navbar.html') %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
+</head>
+<body>
+<h1> INSERT ITEM</h1>
+<form action="/equipos/insert" method="POST">
+
+    <label for="nombre">nombre</label>
+    <input id="nombre" type="text" name="nombre">
+
+    <label for="nacion">nacion</label>
+    <input id="nacion" type="text" name="nacion">
+
+    <label for="campeonatos">campeonatos</label>
+    <input id="campeonatos" type="number" name="campeonatos">
+
+    <label for="historia">historia</label>
+    <input id="historia" type="text" name="historia">
+
+    <label for="imagen">imagen</label>
+    <input id="imagen" type="text" name="imagen">
+
+    <input type="submit" value="insert">
+</form>
+</body>
+<%- include('partials/footer.html') %>
+</html>

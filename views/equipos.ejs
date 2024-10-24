@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/equipos.css'/>
+    <%- include('partials/navbar.html') %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<h1> Lista de Equipos</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Nación</th>
+        <th>Naciones Pilotos</th>
+        <th>Nombres Pilotos</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% if (Array.isArray(equipos)) { %>
+        <% equipos.forEach(function(equipo) { %>
+            <tr>
+                <td><%= equipo.id %></td>
+                <td><%= equipo.equiponombre %></td>
+                <td><%= equipo.nacionequipo %></td>
+                <td><%= equipo.nacionespilotos %></td>
+                <td><%= equipo.nombrepiloto %></td>
+                <td>
+                    <a href="#" data-equipo-id="<%= equipo.id%>" class="action_delete_equipo">Delete</a>
+                    <a href="/equipos/update/<%= equipo.id%>" >Update</a>
+                    <a href="/equipos/detalles/<%=equipo.id%>">Detalles</a>
+                </td>
+            </tr>
+        <% }); %>
+    <% } else { %>
+        <tr>
+            <td colspan="6">No se encontraron equipos</td>
+        </tr>
+    <% } %>
+    <tr>
+
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    async function delete_equipo(evt){
+        evt.preventDefault() // no sigas tu comportamiento por defecto
+        let id = $(this).data('equipo-id')
+        try {
+            await $.ajax({
+                url: '/api/equipos/'  + id,
+                type: 'DELETE'
+            })
+            window.location.reload()
+
+        }catch (e) {
+            console.log(e)
+            console.log('Error' + e.status + " " + e.statusText)
+        }
+    }
+
+    $(document).ready(() =>{
+        document.getElementsByClassName('action_delete_equipo')
+        $('.action_delete_equipo').click(delete_equipo)
+    });
+</script>
+
+</body>
+<%- include('partials/footer.html') %>
+</html>

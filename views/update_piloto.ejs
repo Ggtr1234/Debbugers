@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
+    <%- include('partials/navbar.html') %>
+</head>
+<body>
+<h1> <%= title %></h1>
+<form action="/pilotos/update" method="POST">
+
+    <input id="id" type="hidden" name="id" value="<%= pilotos.id %>">
+    <label for="apellidospiloto">Apellidos</label>
+    <input id="apellidospiloto" type="text" name="apellidospiloto" value="<%= pilotos.apellidospiloto %>">
+
+    <label for="idequipo">Id Equipo</label>
+    <input id="idequipo" type="text" name="idequipo" value=" <%= pilotos.idequipo %>" >
+
+    <label for="nacionpiloto">Nacion</label>
+    <input id="nacionpiloto" type="text" name="nacionpiloto" value="<%= pilotos.nacionpiloto %>" >
+
+    <label for="nombrepiloto">Nombre</label>
+    <input id="nombrepiloto" type="text" name="nombrepiloto" value="<%= pilotos.nombrepiloto %>" >
+
+    <label for="imagenpiloto">Imagen</label>
+    <input id="imagenpiloto" type="text" name="imagenpiloto" value="<%= pilotos.imagenpiloto %>" >
+
+    <label for="titulospiloto">Titulos</label>
+    <input id="titulospiloto" type="text" name="titulospiloto" value="<%= pilotos.titulospiloto %>" >
+
+
+    <input type="submit" value="update">
+</form>
+</body>
+<%- include('partials/footer.html') %>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%=title%></title>
+    <link rel='stylesheet' href='/stylesheets/pilotos.css'/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <% const fechaActual = new Date(); %>
+<% const horaActual = fechaActual.getHours().toString().padStart(2, '0'); %> <!-- Formato "HH:MM" -->
+
+<h1>Horari AulaEx</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Hora</th>
+        <% if (dia === 'lunes') { %>
+            <th>Lunes</th>
+        <% } else if (dia === 'martes') { %>
+            <th>Martes</th>
+        <% } else if (dia === 'miercoles') { %>
+            <th>Miércoles</th>
+        <% } else if (dia === 'jueves') { %>
+            <th>Jueves</th>
+        <% } else if (dia === 'viernes') { %>
+            <th>Viernes</th>
+        <% } %>
+    </tr>
+    </thead>
+    <tbody>
+    <% clases.forEach( function (clase){ %>
+
+        <tr>
+            <td><%= clase.hora %></td>
+                <% let horaDeClase = clase.hora.split(':')[0]; %> <!-- Extraer solo las horas -->
+                <% let esHoraActual = horaDeClase === horaActual; %>
+                <% if (dia === 'lunes') { %>
+                    <td style="background-color: <%= esHoraActual ? 'red' : 'transparent' %>; color: <%= esHoraActual ? 'white' : 'black' %>;">
+                        <%= clase.lunes %>
+                    </td>
+                <% } else if (dia === 'martes') { %>
+                    <td style="background-color: <%= esHoraActual ? 'red' : 'transparent' %>; color: <%= esHoraActual ? 'white' : 'black' %>;">
+                        <%= clase.martes %>
+                    </td>
+                <% } else if (dia === 'miercoles') { %>
+                    <td style="background-color: <%= esHoraActual ? 'red' : 'transparent' %>; color: <%= esHoraActual ? 'white' : 'black' %>;">
+                        <%= clase.miercoles %>
+                    </td>
+                <% } else if (dia === 'jueves') { %>
+                    <td style="background-color: <%= esHoraActual ? 'red' : 'transparent' %>; color: <%= esHoraActual ? 'white' : 'black' %>;">
+                        <%= clase.jueves %>
+                    </td>
+                <% } else if (dia === 'viernes') { %>
+                    <td style="background-color: <%= esHoraActual ? 'red' : 'transparent' %>; color: <%= esHoraActual ? 'white' : 'black' %>;">
+                        <%= clase.viernes %>
+                    </td>
+                <% } %>
+        </tr>
+    <% } ) %>
+
+    </tbody>
+</table>
+
+<script>
+    async function delete_piloto(evt){
+        evt.preventDefault() // no sigas tu comportamiento por defecto
+        let id = $(this).data('piloto-id')
+        try {
+            await $.ajax({
+                url: '/api/pilotos/'  + id,
+                type: 'DELETE'
+            })
+            window.location.reload()
+
+        }catch (e) {
+            console.log(e)
+            console.log('Error' + e.status + " " + e.statusText)
+        }
+    }
+
+    $(document).ready(() =>{
+        document.getElementsByClassName('action_delete_piloto')
+        $('.action_delete_piloto').click(delete_piloto)
+    });
+</script>
+
+</body>
+<%- include('partials/footer.html') %>
+</html>
