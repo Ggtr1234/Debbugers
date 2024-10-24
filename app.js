@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const { log } = require('console');
 var app = express();
 
 // view engine setup
@@ -26,8 +27,18 @@ const db = require('knex')({
             //////////////////////////// PILOTOS ///////////////////////////////
 
 // INDEX
-app.get('/', (req, res) => {
-    res.render('index',{title:'QR'})
+app.get('/', async (req, res) => {
+    const dia = req.params.dia; // Obtener el día de la URL
+
+    const query = await db.select('*').from('DAM2')
+    // console.log(query)
+    const params = {
+        title: 'DAM 2',
+        clases: query,
+        dia: dia
+    }
+    console.log(dia)
+    res.render('index', params)
 });
 
 // app.get('/contact', (req, res) => {
@@ -61,11 +72,14 @@ app.get('/', (req, res) => {
 
 // Show ALL Items
 app.get('/AulaEx', async (req, res) => {
+    const dia = req.params.dia; // Obtener el día de la URL
+
     const query = await db.select('*').from('AulaEx').orderBy('hora','asc')
     // console.log(query)
     const params = {
         title: 'AulaEx',
-        clases: query
+        clases: query,
+        dia: dia
     }
     console.log(params)
     res.render('pilotos', params);
