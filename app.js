@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const { log } = require('console');
 var app = express();
+const bodyParser = require('body-parser');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,16 +29,16 @@ const db = require('knex')({
 
 // INDEX
 app.get('/', async (req, res) => {
-    const dia = req.params.dia; // Obtener el día de la URL
+    // const dia = req.params.dia; // Obtener el día de la URL
 
     const query = await db.select('*').from('DAM2')
     // console.log(query)
     const params = {
         title: 'DAM 2',
         clases: query,
-        dia: dia
+        // dia: dia
     }
-    console.log(dia)
+    // console.log(dia)
     res.render('index', params)
 });
 
@@ -71,30 +72,75 @@ app.get('/', async (req, res) => {
 // });
 
 // Show ALL Items
-app.get('/AulaEx', async (req, res) => {
+app.get('/Aula74', async (req, res) => {
     const dia = req.params.dia; // Obtener el día de la URL
 
-    const query = await db.select('*').from('AulaEx').orderBy('hora','asc')
+    const query = await db.select('*').from('Aula74')
     // console.log(query)
     const params = {
-        title: 'AulaEx',
+        title: 'Aula74',
         clases: query,
         dia: dia
     }
     console.log(params)
-    res.render('pilotos', params);
+    res.render('aulaAll', params);
     
 });
-app.get('/AulaEx/:dia', async (req, res) => {
+app.get('/Aula74/:dia', async (req, res) => {
     const dia = req.params.dia; // Obtener el día de la URL
-    const query = await db.select('hora',dia).from('AulaEx').orderBy('hora', 'asc');
+    console.log(dia)
     
+    const query = await db.select('*').from('Aula74').where('dia',dia);
+    console.log(query)
+    const params = {
+        title: 'Aula74',
+        clases: query,
+        dia: dia // Pasar el día como parámetro
+    };
+    res.render('aulaDia', params);
+});
+
+app.get('/Aula83', async (req, res) => {
+    const dia = req.params.dia; // Obtener el día de la URL
+
+    const query = await db.select('*').from('Aula83')
+    // console.log(query)
+    const params = {
+        title: 'Aula83',
+        clases: query,
+        dia: dia
+    }
+    console.log(params)
+    res.render('aulaAll', params);
+    
+});
+
+app.get('/Aula83/:dia', async (req, res) => {
+    const dia = req.params.dia; // Obtener el día de la URL
+    console.log(dia)
+    
+    const query = await db.select('*').from('Aula83').where('dia',dia);
+    console.log(query)
+    const params = {
+        title: 'Aula83',
+        clases: query,
+        dia: dia // Pasar el día como parámetro
+    };
+    res.render('aulaDia', params);
+});
+
+app.get('/qr', async (req, res) => {
+    const dia = Date.now(); // Obtener el día de la URL
+    console.log(dia)
+    
+    const query = await db.select('*').from('Aula83').where('dia',dia);
+    console.log(query)
     const params = {
         title: 'AulaEx',
         clases: query,
         dia: dia // Pasar el día como parámetro
     };
-    res.render('pilotos', params);
+    res.render('aulaDia', params);
 });
 // UPDATE ITEM
 // app.get('/pilotos/update/:id', async (req,res)=>{
